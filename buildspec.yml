@@ -1,0 +1,13 @@
+version: 0.2
+phases:
+  install:
+    commands:
+      - echo Installing Maven dependencies...
+      - mvn install -DskipTests=true
+  build:
+    commands:
+      - echo Building the application...
+      - mvn package -DskipTests=true
+artifacts:
+  files:
+    - target/*.jar
