@@ -4,10 +4,24 @@ phases:
     commands:
       - echo Installing Maven dependencies...
       - mvn install -DskipTests=true
+      
   build:
     commands:
       - echo Building the application...
       - mvn package -DskipTests=true
+      
+  post_build:
+    commands:
+      - echo Setting execute permissions for deployment scripts...
+      # Yeh command 'scripts/' folder ke andar saari .sh files ko execute permission degi.
+      - chmod +x scripts/*.sh
+
 artifacts:
   files:
-    - target/*.jar
+    # 1. Application JAR file
+    - 'target/*.jar' 
+    # 2. CodeDeploy configuration file
+    - 'appspec.yml'
+    # 3. Saari deployment scripts (scripts folder ke andar sab kuch)
+    - 'scripts/**/*' 
+  discard-paths: yes
