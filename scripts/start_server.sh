@@ -1,5 +1,4 @@
 #!/bin/bash
-# Us directory mein jaayein jahan JAR file hai
-cd /home/ec2-user/app/target
-# Java application ko background mein start karein aur logs ko ek file mein daalein
-nohup java -jar devops-demo-0.0.1-SNAPSHOT.jar > /home/ec2-user/app/application.log 2>&1 &
+# Naya server /home/ec2-user/app directory mein start karein.
+# JAR file ka pura naam mention karein!
+nohup java -jar /home/ec2-user/app/devops-demo-0.0.1-SNAPSHOT.jar > /home/ec2-user/app/application.log 2>&1 &
