@@ -1,38 +1,52 @@
 version: 0.0
+
 os: linux
 
 files:
-  # Deployment bundle की सभी files EC2 instance पर इस location पर copy होंगी।
+
   - source: /
+
     destination: /home/ec2-user/app
 
 hooks:
-  # Deployment से पहले cleanup. 'root' permission का उपयोग किया गया है।
+
   BeforeInstall:
+
     - location: scripts/before_install.sh
+
       timeout: 300
+
       runas: root
 
-  # नई files copy होने से पहले पुरानी service को बंद करना।
-  ApplicationStop:
-    - location: scripts/stop_server.sh
-      timeout: 300
-      runas: ec2-user
-
-  # Files copy होने के बाद ownership और permissions set करना। 'root' permission का उपयोग किया गया है।
   AfterInstall:
+
     - location: scripts/after_install.sh
+
       timeout: 300
+
       runas: root
 
-  # Application को start करना (जैसे, nohup java -jar ...)।
   ApplicationStart:
+
     - location: scripts/start_server.sh
+
       timeout: 300
+
       runas: ec2-user
 
-  # Application के successfully start होने की पुष्टि करना (जैसे, curl health check)।
   ValidateService:
+
     - location: scripts/validate_service.sh
+
       timeout: 300
+
       runas: ec2-user
+
+  ApplicationStop:
+
+    - location: scripts/stop_server.sh
+
+      timeout: 300
+
+      runas: ec2-user
+ 
